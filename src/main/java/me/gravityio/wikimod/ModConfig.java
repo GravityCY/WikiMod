@@ -17,13 +17,12 @@ import net.minecraft.text.Text;
 
 import java.awt.*;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ModConfig {
     public static ModConfig INSTANCE;
-    private static final String SEPARATOR = ";";
+    public static final String SEPARATOR = ":";
     private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("wikimod.json");
     private static final GsonBuilder builder = new GsonBuilder()
             .serializeNulls()
@@ -38,28 +37,43 @@ public class ModConfig {
             .overrideGsonBuilder(builder)
             .build();
 
+    // TODO: CARPET, AE2, ORIGINS, ULTRIS, SUPPLEMENTARIES
+
     @ConfigEntry
     public Map<String, String> wikis = Map.of(
-            "minecraft", "https://minecraft.fandom.com",
-            "create", "https://create.fandom.com"
+            "minecraft", "minecraft",
+            "create", "create",
+            "byg", "oh-the-biomes-youll-go",
+            "mca", "minecraft-comes-alive-reborn"
     );
 
     public List<String> getWikis() {
-        return Helper.toList(this.wikis, SEPARATOR);
+        return Helper.toList(this.wikis, (key, value) -> {
+            if (!key.equals(value)) return key + SEPARATOR + value;
+            return key;
+        });
     }
 
     public void setWikis(List<String> mapList) {
-        Map<String, String> map = new HashMap<>();
+        this.wikis.clear();
         for (String s : mapList) {
             var split = s.split(SEPARATOR, 2);
-            if (split.length != 2) continue;
-            var key = split[0];
-            var value = split[1];
-            if (key == null || value == null) continue;
-            if (!SupportedCustomWikis.isSupported(value)) continue;
-            map.put(key, value);
+            String key;
+            String value;
+
+            if (split.length == 1) {
+                key = split[0];
+                value = split[0];
+            } else if (split.length == 2) {
+                key = split[0];
+                value = doSanitizeFandomURL(split[1]);
+            } else {
+                continue;
+            }
+
+            if (key == null) continue;
+            this.wikis.put(key, value);
         }
-        this.wikis = map;
 
         this.onUpdateWikis();
     }
@@ -69,12 +83,17 @@ public class ModConfig {
         for (Map.Entry<String, String> entry : this.wikis.entrySet()) {
             var key = entry.getKey();
             var value = entry.getValue();
-            WikiFinder regItem;
-            if (FandomPageFinder.isFandomUrl(value)) {
-                regItem = new FandomPageFinder(value);
-            } else continue;
+            WikiFinder regItem = new FandomPageFinder(getFandomURLFromSubdomain(value));
             WikiRegistry.register(key, regItem);
         }
+    }
+
+    public static String getFandomURLFromSubdomain(String subdomain) {
+        return "https://" + subdomain.toLowerCase() + ".fandom.com";
+    }
+
+    public static String doSanitizeFandomURL(String URL) {
+        return URL.toLowerCase().replace("https://", "").replace("fandom.com", "");
     }
 
 

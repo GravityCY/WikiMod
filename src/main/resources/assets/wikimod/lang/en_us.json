@@ -2,7 +2,13 @@
   "category.keybind.wikimod": "Wiki Mod",
   "keybind.wikimod.open_thing": "Open Wiki",
 
+  "messages.wikimod.command.wiki.help": "§aOpens a known wiki.\n§7Usage: §8/wiki §7<§6namespace§7> <§6url§7>\n§7If no namespace is specified defaults to 'minecraft'\n§7Example: §8/wiki §6create crushing wheel\n§7Example: §8/wiki §6spawn chunks",
+
   "messages.wikimod.open_thing.unknown_wiki": "Unknown wiki '%s'!",
   "messages.wikimod.open_thing.success": "Opened your browser at '%s'!",
-  "messages.wikimod.open_thing.failure": "Failed to open your browser at '%s'!"
+  "messages.wikimod.open_thing.failure": "Failed to open your browser at '%s'!",
+
+  "wikimod.config.category.main.title": "Wiki Mod",
+  "wikimod.config.category.main.wikis.label": "Fandom Wiki's",
+  "wikimod.config.category.main.wikis.description": "Fandom Wiki's to open in your browser.\n\n§cHas to be in the format of §r'§7<namespace>;<https://[fandom_url]>§c' or '§7<namespace>;<subdomain>§c' or '§7<namespace>;<fandom_url>§c'.\n\n§aThe namespace is used to make blocks from a certain mod open for that particular wiki.§r\n\n§6Example:\n§f'§7minecraft;minecraft§f'. §aAny block that is from §f'§7minecraft§f'§a will open minecraft.fandom.com."
 }

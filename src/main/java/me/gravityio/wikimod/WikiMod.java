@@ -1,15 +1,20 @@
 package me.gravityio.wikimod;
 
+import me.gravityio.wikimod.commands.NamespaceArgument;
 import me.gravityio.wikimod.commands.WikiCommand;
 import me.gravityio.wikimod.mixins.impl.SlotAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +38,11 @@ public class WikiMod implements ModInitializer, PreLaunchEntrypoint {
 
     @Override
     public void onInitialize() {
+        DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
         KeyBindingHelper.registerKeyBinding(keybind);
         ClientCommandRegistrationCallback.EVENT.register(WikiCommand::register);
         ClientTickEvents.END_CLIENT_TICK.register(this::onEndClientTick);
+        ArgumentTypeRegistry.registerArgumentType(new Identifier(WikiMod.MOD_ID, "namespace"), NamespaceArgument.class, ConstantArgumentSerializer.of(NamespaceArgument::namespace));
     }
 
     private void onEndClientTick(MinecraftClient client) {

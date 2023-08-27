@@ -1,6 +1,8 @@
 package me.gravityio.wikimod.registry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WikiRegistry {
@@ -16,5 +18,15 @@ public class WikiRegistry {
     }
     public static WikiFinder getWikiFinder(String namespace) {
         return NAMESPACE_TO_WIKI.get(namespace);
+    }
+
+    public static List<String> getNamespaces() {
+        List<String> out = new ArrayList<>();
+        NAMESPACE_TO_WIKI.forEach((namespace, wiki) -> out.add(namespace));
+        return out;
+    }
+
+    public static boolean exists(String namespace) {
+        return NAMESPACE_TO_WIKI.containsKey(namespace);
     }
 }
