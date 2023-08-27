@@ -12,20 +12,28 @@
     "issues": "${mod_sources}"
   },
   "license": "${mod_license}",
-  "icon": "assets/example/icon.png",
+  "icon": "assets/wikimod/icon.png",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      "me.gravityio.example.ExampleMod"
+      "me.gravityio.wikimod.WikiMod"
+    ],
+    "preLaunch": [
+      "me.gravityio.wikimod.WikiMod"
+    ],
+    "modmenu": [
+      "me.gravityio.wikimod.compat.ModMenuApiImpl"
     ]
   },
   "mixins": [
-    "example.mixins.json"
+    "wikimod.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "minecraft": "${minecraft_version}",
-    "java": ">=17"
+    "java": ">=17",
+    "fabric": "*",
+    "yet_another_config_lib_v3": "*"
   }
 }

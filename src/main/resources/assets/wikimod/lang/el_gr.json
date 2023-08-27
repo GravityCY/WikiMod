@@ -1,0 +1,7 @@
+{
+  "category.keybind.wikimod": "Wiki Mod",
+  "keybind.wikimod.open_thing": "Ανοιγεται το Wiki",
+
+  "messages.wikimod.open_thing.success": "Ανοίγετε το Browser σας στο '%s'",
+  "messages.wikimod.open_thing.failure": "Απέτυχε να ανοικτή το Browser σας στο '%s'"
+}

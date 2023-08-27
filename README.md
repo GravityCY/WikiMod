@@ -1,1 +1,1 @@
-# MOD
+# A mod of the wiki of the pedias

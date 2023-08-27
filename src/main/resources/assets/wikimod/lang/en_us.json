@@ -1,0 +1,8 @@
+{
+  "category.keybind.wikimod": "Wiki Mod",
+  "keybind.wikimod.open_thing": "Open Wiki",
+
+  "messages.wikimod.open_thing.unknown_wiki": "Unknown wiki '%s'!",
+  "messages.wikimod.open_thing.success": "Opened your browser at '%s'!",
+  "messages.wikimod.open_thing.failure": "Failed to open your browser at '%s'!"
+}
